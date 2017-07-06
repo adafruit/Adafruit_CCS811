@@ -87,14 +87,19 @@ void Adafruit_CCS811::setEnvironmentalData(uint8_t humidity, float temperature)
 	not set by the application) to compensate for changes in
 	relative humidity and ambient temperature.*/
 	
-	//TODO: pass int for humidity, pass float for temperature, convert to reg value
+	uint8_t hum_perc = humidity << 1;
 	
-	/*
-	uint8_t buf[] = {(uint8_t)((humidity >> 8) & 0xF), (uint8_t)(humidity & 0xF),
-		(uint8_t)((temperature >> 8) & 0xF), (uint8_t)(temperature & 0xF)};
+	float fractional = modf(temperature, &temperature);
+	uint16_t temp_high = (((uint16_t)temperature + 25) << 9);
+	uint16_t temp_low = ((uint16_t)(fractional / 0.001953125) & 0x1FF);
+	
+	uint16_t temp_conv = (temp_high | temp_low);
+
+	uint8_t buf[] = {hum_perc, 0x00,
+		(uint8_t)((temp_conv >> 8) & 0xFF), (uint8_t)(temp_conv & 0xFF)};
 	
 	this->write(CCS811_ENV_DATA, buf, 4);
-	*/
+
 }
 
 //calculate temperature based on the NTC register
