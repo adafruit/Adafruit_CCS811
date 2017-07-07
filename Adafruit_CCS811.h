@@ -68,7 +68,7 @@ class Adafruit_CCS811 {
 		
 		bool begin(uint8_t addr = CCS811_ADDRESS);
 
-		void setEnvironmentalData(uint8_t humidity, float temperature);
+		void setEnvironmentalData(uint8_t humidity, double temperature);
 
 		//calculate temperature based on the NTC register
 		float calculateTemperature();

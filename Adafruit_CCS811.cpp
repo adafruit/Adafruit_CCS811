@@ -73,7 +73,7 @@ uint8_t Adafruit_CCS811::readData()
 	}
 }
 
-void Adafruit_CCS811::setEnvironmentalData(uint8_t humidity, float temperature)
+void Adafruit_CCS811::setEnvironmentalData(uint8_t humidity, double temperature)
 {
 	/* Humidity is stored as an unsigned 16 bits in 1/512%RH. The
 	default value is 50% = 0x64, 0x00. As an example 48.5%
