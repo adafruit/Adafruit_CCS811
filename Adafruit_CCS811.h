@@ -58,7 +58,7 @@
 
 #define CCS811_HW_ID_CODE			0x81
 
-#define CCS811_REF_RESISTOR			10000
+#define CCS811_REF_RESISTOR			100000
 
 class Adafruit_CCS811 {
 	public:
