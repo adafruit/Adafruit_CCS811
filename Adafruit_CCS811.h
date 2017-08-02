@@ -71,7 +71,7 @@ class Adafruit_CCS811 {
 		void setEnvironmentalData(uint8_t humidity, double temperature);
 
 		//calculate temperature based on the NTC register
-		float calculateTemperature();
+		double calculateTemperature();
 		
 		void setThresholds(uint16_t low_med, uint16_t med_high, uint8_t hysteresis = 50);
 
@@ -84,6 +84,8 @@ class Adafruit_CCS811 {
 		uint16_t getTVOC() { return _TVOC; }
 		uint16_t geteCO2() { return _eCO2; }
 		
+		void setTempOffset(float offset) { _tempOffset = offset; }
+		
 		//check if data is available to be read
 		bool available();
 		uint8_t readData();
@@ -92,6 +94,7 @@ class Adafruit_CCS811 {
 
 	private:
 		uint8_t _i2caddr;
+		float _tempOffset;
 		
 		uint16_t _TVOC;
 		uint16_t _eCO2;

@@ -103,22 +103,25 @@ void Adafruit_CCS811::setEnvironmentalData(uint8_t humidity, double temperature)
 }
 
 //calculate temperature based on the NTC register
-float Adafruit_CCS811::calculateTemperature()
+double Adafruit_CCS811::calculateTemperature()
 {
 	uint8_t buf[4];
 	this->read(CCS811_NTC, buf, 4);
 
-	uint16_t VRref = ((uint16_t)buf[0] << 8) | buf[1];
-	uint16_t VRntc = ((uint16_t)buf[2] << 8) | buf[3];
-	float Rntc = ((float)VRntc * CCS811_REF_RESISTOR / (float)VRref);
-
-	//Code from Milan Malesevic and Zoran Stupic, 2011,
-	//Modified by Max Mayfield,
-	float temp = log((long)Rntc);
-	temp = 1 / (0.001129148 + (0.000234125 * temp) + (0.0000000876741 * temp * temp * temp));
-	temp = temp - 273.15;  // Convert Kelvin to Celsius
+	uint32_t vref = ((uint32_t)buf[0] << 8) | buf[1];
+	uint32_t vntc = ((uint32_t)buf[2] << 8) | buf[3];
 	
- 	return temp;
+	//from ams ccs811 app note
+	uint32_t rntc = vntc * CCS811_REF_RESISTOR / vref;
+	
+	double ntc_temp;
+	ntc_temp = log((double)rntc / CCS811_REF_RESISTOR); // 1
+	ntc_temp /= 3380; // 2
+	ntc_temp += 1.0 / (25 + 273.15); // 3
+	ntc_temp = 1.0 / ntc_temp; // 4
+	ntc_temp -= 273.15; // 5
+	return ntc_temp - _tempOffset;
+
 }
 
 void Adafruit_CCS811::setThresholds(uint16_t low_med, uint16_t med_high, uint8_t hysteresis)
