@@ -250,7 +250,7 @@ void Adafruit_CCS811::read(uint8_t reg, uint8_t *buf, uint8_t num)
 	//on arduino we need to read in 32 byte chunks
 	while(pos < num){
 		
-		uint8_t read_now = min(32, num - pos);
+		uint8_t read_now = min((uint8_t)32, (uint8_t)(num - pos));
 		Wire.beginTransmission((uint8_t)_i2caddr);
 		Wire.write((uint8_t)reg + pos);
 		Wire.endTransmission();
