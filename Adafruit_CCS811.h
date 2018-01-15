@@ -60,6 +60,11 @@
 
 #define CCS811_REF_RESISTOR			100000
 
+/**************************************************************************/
+/*! 
+    @brief  Class that stores state and functions for interacting with CCS811 gas sensor chips
+*/
+/**************************************************************************/
 class Adafruit_CCS811 {
 	public:
 		//constructors
@@ -81,9 +86,28 @@ class Adafruit_CCS811 {
 		void enableInterrupt();
 		void disableInterrupt();
 		
+        /**************************************************************************/
+        /*! 
+            @brief  returns the stored total volatile organic compounds measurement. This does does not read the sensor. To do so, call readData()
+            @returns TVOC measurement as 16 bit integer
+        */
+        /**************************************************************************/
 		uint16_t getTVOC() { return _TVOC; }
+
+        /**************************************************************************/
+        /*! 
+            @brief  returns the stored estimated carbon dioxide measurement. This does does not read the sensor. To do so, call readData()
+            @returns eCO2 measurement as 16 bit integer
+        */
+        /**************************************************************************/
 		uint16_t geteCO2() { return _eCO2; }
 		
+        /**************************************************************************/
+        /*! 
+            @brief  set the temperature compensation offset for the device. This is needed to offset errors in NTC measurements.
+            @param offset the offset to be added to temperature measurements.
+        */
+        /**************************************************************************/
 		void setTempOffset(float offset) { _tempOffset = offset; }
 		
 		//check if data is available to be read
