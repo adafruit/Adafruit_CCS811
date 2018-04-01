@@ -240,7 +240,7 @@ uint8_t Adafruit_CCS811::read8(byte reg)
 void Adafruit_CCS811::_i2c_init()
 {
 	Wire.begin();
-	#ifdef ARDUINO_ESP8266_NODEMCU
+	#ifdef ESP8266
 	Wire.setClockStretchLimit(500);
 	#endif
 }
