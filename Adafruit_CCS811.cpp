@@ -273,3 +273,41 @@ void Adafruit_CCS811::write(uint8_t reg, uint8_t *buf, uint8_t num)
 	Wire.write((uint8_t *)buf, num);
 	Wire.endTransmission();
 }
+
+//Returns the baseline value
+//Used for telling sensor what 'clean' air is
+//You must put the sensor in clean air and record this value
+uint16_t Adafruit_CCS811::getBaseline( void )
+{
+	uint8_t data[2];
+	this->read(CCS811_BASELINE, data, 2);
+
+	unsigned int baseline = ((uint16_t)data[0] << 8) | data[1];
+	if( checkError() )
+	{
+		return 0;
+	}
+	else
+	{
+		return (baseline);
+	}
+}
+
+bool Adafruit_CCS811::setBaseline( uint16_t input )
+{
+	uint8_t data[2];
+	data[0] = (input >> 8) & 0x00FF;
+	data[1] = input & 0x00FF;
+	
+	this->write( CCS811_BASELINE, data, 2 );
+	
+	if( checkError() )
+	{
+		return false;
+	}
+	else
+	{
+		return true;
+	}
+}
+

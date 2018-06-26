@@ -115,6 +115,9 @@ class Adafruit_CCS811 {
 		uint8_t readData();
 		
 		bool checkError();
+		
+		bool setBaseline( uint16_t input );
+		uint16_t getBaseline();
 
 	private:
 		uint8_t _i2caddr;
