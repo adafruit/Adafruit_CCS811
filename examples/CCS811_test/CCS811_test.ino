@@ -40,7 +40,7 @@ void loop() {
       Serial.print("CO2: ");
       Serial.print(ccs.geteCO2());
       Serial.print("ppm, TVOC: ");
-      Serial.print(ccs.getTVOC());
+      Serial.println(ccs.getTVOC());
     }
     else{
       Serial.println("ERROR!");
