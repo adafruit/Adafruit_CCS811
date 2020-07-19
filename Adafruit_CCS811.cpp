@@ -1,4 +1,16 @@
 #include "Adafruit_CCS811.h"
+#include <Wire.h>
+
+/**************************************************************************/
+/*!
+ * @brief  CCS811 constructor using i2c
+ * @param  *theWire
+ *         optional wire
+ */
+/**************************************************************************/
+Adafruit_CCS811::Adafruit_CCS811(TwoWire *theWire) {
+  _wire = theWire;
+}
 
 /**************************************************************************/
 /*!
@@ -236,9 +248,9 @@ uint8_t Adafruit_CCS811::read8(byte reg) {
 }
 
 void Adafruit_CCS811::_i2c_init() {
-  Wire.begin();
+  _wire->begin();
 #ifdef ESP8266
-  Wire.setClockStretchLimit(500);
+  _wire->setClockStretchLimit(500);
 #endif
 }
 
@@ -250,21 +262,21 @@ void Adafruit_CCS811::read(uint8_t reg, uint8_t *buf, uint8_t num) {
   while (pos < num) {
 
     uint8_t read_now = min((uint8_t)32, (uint8_t)(num - pos));
-    Wire.beginTransmission((uint8_t)_i2caddr);
-    Wire.write((uint8_t)reg + pos);
-    Wire.endTransmission();
-    Wire.requestFrom((uint8_t)_i2caddr, read_now);
+    _wire->beginTransmission((uint8_t)_i2caddr);
+    _wire->write((uint8_t)reg + pos);
+    _wire->endTransmission();
+    _wire->requestFrom((uint8_t)_i2caddr, read_now);
 
     for (int i = 0; i < read_now; i++) {
-      buf[pos] = Wire.read();
+      buf[pos] = _wire->read();
       pos++;
     }
   }
 }
 
 void Adafruit_CCS811::write(uint8_t reg, uint8_t *buf, uint8_t num) {
-  Wire.beginTransmission((uint8_t)_i2caddr);
-  Wire.write((uint8_t)reg);
-  Wire.write((uint8_t *)buf, num);
-  Wire.endTransmission();
+  _wire->beginTransmission((uint8_t)_i2caddr);
+  _wire->write((uint8_t)reg);
+  _wire->write((uint8_t *)buf, num);
+  _wire->endTransmission();
 }

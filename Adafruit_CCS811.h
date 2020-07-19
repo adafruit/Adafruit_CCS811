@@ -66,7 +66,7 @@ enum {
 class Adafruit_CCS811 {
 public:
   // constructors
-  Adafruit_CCS811(void){};
+  Adafruit_CCS811(TwoWire *theWire = &Wire);
   ~Adafruit_CCS811(void){};
 
   bool begin(uint8_t addr = CCS811_ADDRESS);
@@ -119,6 +119,7 @@ public:
   bool checkError();
 
 private:
+  TwoWire *_wire; /**< Wire object */
   uint8_t _i2caddr;
   float _tempOffset;
 
