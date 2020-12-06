@@ -73,6 +73,9 @@ public:
 
   void setEnvironmentalData(uint8_t humidity, double temperature);
 
+  uint16_t getBaseline();
+  void setBaseline(uint16_t baseline);
+
   // calculate temperature based on the NTC register
   double calculateTemperature();
 
