@@ -106,6 +106,26 @@ public:
   /**************************************************************************/
   uint16_t geteCO2() { return _eCO2; }
 
+
+  /**************************************************************************/
+  /*!
+      @brief  returns the "Current Selected" in uA.
+     This does does not read the sensor. To do so, call readData()
+      @returns "Current Selected" in uA as 16 bit integer
+  */
+  /**************************************************************************/
+  uint16_t getCurrentSelected() { return _currentSelected; }
+
+  /**************************************************************************/
+  /*!
+      @brief  returns the raw ADC reading. This does
+     does not read the sensor. To do so, call readData()
+      @returns raw ADC reading as 16 bit integer
+  */
+  /**************************************************************************/
+  uint16_t getRawADCreading() { return _rawADCreading; }
+
+
   /**************************************************************************/
   /*!
       @brief  set the temperature compensation offset for the device. This is
@@ -127,6 +147,9 @@ private:
 
   uint16_t _TVOC;
   uint16_t _eCO2;
+
+  uint16_t _currentSelected;
+  uint16_t _rawADCreading;
 
   void write8(byte reg, byte value);
   void write16(byte reg, uint16_t value);
