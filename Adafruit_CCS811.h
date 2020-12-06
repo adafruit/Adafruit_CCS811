@@ -71,7 +71,7 @@ public:
 
   bool begin(uint8_t addr = CCS811_ADDRESS);
 
-  void setEnvironmentalData(uint8_t humidity, double temperature);
+  void setEnvironmentalData(double humidity, double temperature);
 
   uint16_t getBaseline();
   void setBaseline(uint16_t baseline);
