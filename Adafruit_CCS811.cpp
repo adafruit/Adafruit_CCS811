@@ -86,7 +86,7 @@ bool Adafruit_CCS811::available() {
 /**************************************************************************/
 /*!
     @brief  read and store the sensor data. This data can be accessed with
-   getTVOC() and geteCO2()
+   getTVOC(), geteCO2(), getCurrentSelected() and getRawADCreading()
     @returns 0 if no error, error code otherwise.
 */
 /**************************************************************************/
@@ -99,6 +99,8 @@ uint8_t Adafruit_CCS811::readData() {
 
     _eCO2 = ((uint16_t)buf[0] << 8) | ((uint16_t)buf[1]);
     _TVOC = ((uint16_t)buf[2] << 8) | ((uint16_t)buf[3]);
+    _currentSelected = ((uint16_t)buf[6] >> 2);
+    _rawADCreading = (((uint16_t)buf[6] << 8) & 3) | ((uint16_t)buf[7]);
 
     if (_status.ERROR)
       return buf[5];
