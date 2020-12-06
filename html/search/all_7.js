@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['setbaseline',['setBaseline',['../class_adafruit___c_c_s811.html#a9070823b9b5fe462ab20333f3bddd7d1',1,'Adafruit_CCS811']]],
   ['setdrivemode',['setDriveMode',['../class_adafruit___c_c_s811.html#a3e6018dfec23763bf48344e81a72675a',1,'Adafruit_CCS811']]],
   ['setenvironmentaldata',['setEnvironmentalData',['../class_adafruit___c_c_s811.html#a3988881051226395e4858d9515a126a7',1,'Adafruit_CCS811']]],
   ['settempoffset',['setTempOffset',['../class_adafruit___c_c_s811.html#a71df73bd3538f64ecc3fee7ee41c53d6',1,'Adafruit_CCS811']]],

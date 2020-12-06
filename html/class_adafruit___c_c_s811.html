@@ -80,6 +80,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a3988881051226395e4858d9515a126a7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___c_c_s811.html#a3988881051226395e4858d9515a126a7">setEnvironmentalData</a> (uint8_t humidity, double temperature)</td></tr>
 <tr class="memdesc:a3988881051226395e4858d9515a126a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">set the humidity and temperature compensation for the sensor.  <a href="#a3988881051226395e4858d9515a126a7">More...</a><br /></td></tr>
 <tr class="separator:a3988881051226395e4858d9515a126a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad15ce417ac4fe460ecb3ff86e6a1641d"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___c_c_s811.html#ad15ce417ac4fe460ecb3ff86e6a1641d">getBaseline</a> ()</td></tr>
+<tr class="memdesc:ad15ce417ac4fe460ecb3ff86e6a1641d"><td class="mdescLeft">&#160;</td><td class="mdescRight">get the current baseline from the sensor.  <a href="#ad15ce417ac4fe460ecb3ff86e6a1641d">More...</a><br /></td></tr>
+<tr class="separator:ad15ce417ac4fe460ecb3ff86e6a1641d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9070823b9b5fe462ab20333f3bddd7d1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___c_c_s811.html#a9070823b9b5fe462ab20333f3bddd7d1">setBaseline</a> (uint16_t baseline)</td></tr>
+<tr class="memdesc:a9070823b9b5fe462ab20333f3bddd7d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">set the baseline for the sensor.  <a href="#a9070823b9b5fe462ab20333f3bddd7d1">More...</a><br /></td></tr>
+<tr class="separator:a9070823b9b5fe462ab20333f3bddd7d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8fab86b4561abef730f986901d7a5dbd"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___c_c_s811.html#a8fab86b4561abef730f986901d7a5dbd">calculateTemperature</a> ()</td></tr>
 <tr class="memdesc:a8fab86b4561abef730f986901d7a5dbd"><td class="mdescLeft">&#160;</td><td class="mdescRight">calculate the temperature using the onboard NTC resistor.  <a href="#a8fab86b4561abef730f986901d7a5dbd">More...</a><br /></td></tr>
 <tr class="separator:a8fab86b4561abef730f986901d7a5dbd"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -181,6 +187,52 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
   <table class="params">
     <tr><td class="paramname">humidity</td><td>the humidity data as a percentage. For 55% humidity, pass in integer 55. </td></tr>
     <tr><td class="paramname">temperature</td><td>the temperature in degrees C as a decimal number. For 25.5 degrees C, pass in 25.5 </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ad15ce417ac4fe460ecb3ff86e6a1641d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad15ce417ac4fe460ecb3ff86e6a1641d">&#9670;&nbsp;</a></span>getBaseline()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t Adafruit_CCS811::getBaseline </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>get the current baseline from the sensor. </p>
+<dl class="section return"><dt>Returns</dt><dd>the baseline as 16 bit integer. This value is not human readable. </dd></dl>
+
+</div>
+</div>
+<a id="a9070823b9b5fe462ab20333f3bddd7d1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9070823b9b5fe462ab20333f3bddd7d1">&#9670;&nbsp;</a></span>setBaseline()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Adafruit_CCS811::setBaseline </td>
+          <td>(</td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>baseline</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>set the baseline for the sensor. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">baseline</td><td>the baseline to be set. Has to be a value retrieved by <a class="el" href="class_adafruit___c_c_s811.html#ad15ce417ac4fe460ecb3ff86e6a1641d" title="get the current baseline from the sensor. ">getBaseline()</a>. </td></tr>
   </table>
   </dd>
 </dl>
