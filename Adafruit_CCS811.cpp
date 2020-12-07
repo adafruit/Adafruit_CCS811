@@ -132,8 +132,8 @@ void Adafruit_CCS811::setEnvironmentalData(float humidity, float temperature) {
   not set by the application) to compensate for changes in
   relative humidity and ambient temperature.*/
 
-  uint16_t hum_conv = humidity * 512 + 0.5;
-  uint16_t temp_conv = (temperature + 25) * 512 + 0.5;
+  uint16_t hum_conv = humidity * 512.0f + 0.5f;
+  uint16_t temp_conv = (temperature + 25.0f) * 512.0f + 0.5f;
 
   uint8_t buf[] = {
       (uint8_t)((hum_conv >> 8) & 0xFF), (uint8_t)(hum_conv & 0xFF),
@@ -274,7 +274,6 @@ void Adafruit_CCS811::_i2c_init() {
 }
 
 void Adafruit_CCS811::read(uint8_t reg, uint8_t *buf, uint8_t num) {
-  uint8_t value;
   uint8_t pos = 0;
 
   // on arduino we need to read in 32 byte chunks
