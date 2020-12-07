@@ -119,8 +119,7 @@ uint8_t Adafruit_CCS811::readData() {
    For 25.5 degrees C, pass in 25.5
 */
 /**************************************************************************/
-void Adafruit_CCS811::setEnvironmentalData(double humidity,
-                                           double temperature) {
+void Adafruit_CCS811::setEnvironmentalData(float humidity, float temperature) {
   /* Humidity is stored as an unsigned 16 bits in 1/512%RH. The
   default value is 50% = 0x64, 0x00. As an example 48.5%
   humidity would be 0x61, 0x00.*/
@@ -133,17 +132,8 @@ void Adafruit_CCS811::setEnvironmentalData(double humidity,
   not set by the application) to compensate for changes in
   relative humidity and ambient temperature.*/
 
-  float fractional_humidity = modf(humidity, &humidity);
-  uint16_t hum_high = (((uint16_t)humidity) << 9);
-  uint16_t hum_low = ((uint16_t)(fractional_humidity * 512) & 0x1FF);
-
-  uint16_t hum_conv = (hum_high | hum_low);
-
-  float fractional_temperature = modf(temperature, &temperature);
-  uint16_t temp_high = (((uint16_t)temperature + 25) << 9);
-  uint16_t temp_low = ((uint16_t)(fractional_temperature * 512) & 0x1FF);
-
-  uint16_t temp_conv = (temp_high | temp_low);
+  uint16_t hum_conv = humidity * 512 + 0.5;
+  uint16_t temp_conv = (temperature + 25) * 512 + 0.5;
 
   uint8_t buf[] = {
       (uint8_t)((hum_conv >> 8) & 0xFF), (uint8_t)(hum_conv & 0xFF),
