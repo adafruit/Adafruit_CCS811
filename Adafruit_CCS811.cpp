@@ -113,14 +113,13 @@ uint8_t Adafruit_CCS811::readData() {
 /**************************************************************************/
 /*!
     @brief  set the humidity and temperature compensation for the sensor.
-    @param humidity the humidity data as a percentage. For 55% humidity, pass in
-   integer 55.
+    @param humidity the humidity data as a percentage. For 55.5% humidity, pass
+   in 55.5
     @param temperature the temperature in degrees C as a decimal number.
    For 25.5 degrees C, pass in 25.5
 */
 /**************************************************************************/
-void Adafruit_CCS811::setEnvironmentalData(uint8_t humidity,
-                                           double temperature) {
+void Adafruit_CCS811::setEnvironmentalData(float humidity, float temperature) {
   /* Humidity is stored as an unsigned 16 bits in 1/512%RH. The
   default value is 50% = 0x64, 0x00. As an example 48.5%
   humidity would be 0x61, 0x00.*/
@@ -133,16 +132,12 @@ void Adafruit_CCS811::setEnvironmentalData(uint8_t humidity,
   not set by the application) to compensate for changes in
   relative humidity and ambient temperature.*/
 
-  uint8_t hum_perc = humidity << 1;
+  uint16_t hum_conv = humidity * 512.0f + 0.5f;
+  uint16_t temp_conv = (temperature + 25.0f) * 512.0f + 0.5f;
 
-  float fractional = modf(temperature, &temperature);
-  uint16_t temp_high = (((uint16_t)temperature + 25) << 9);
-  uint16_t temp_low = ((uint16_t)(fractional / 0.001953125) & 0x1FF);
-
-  uint16_t temp_conv = (temp_high | temp_low);
-
-  uint8_t buf[] = {hum_perc, 0x00, (uint8_t)((temp_conv >> 8) & 0xFF),
-                   (uint8_t)(temp_conv & 0xFF)};
+  uint8_t buf[] = {
+      (uint8_t)((hum_conv >> 8) & 0xFF), (uint8_t)(hum_conv & 0xFF),
+      (uint8_t)((temp_conv >> 8) & 0xFF), (uint8_t)(temp_conv & 0xFF)};
 
   this->write(CCS811_ENV_DATA, buf, 4);
 }
@@ -279,7 +274,6 @@ void Adafruit_CCS811::_i2c_init() {
 }
 
 void Adafruit_CCS811::read(uint8_t reg, uint8_t *buf, uint8_t num) {
-  uint8_t value;
   uint8_t pos = 0;
 
   // on arduino we need to read in 32 byte chunks
