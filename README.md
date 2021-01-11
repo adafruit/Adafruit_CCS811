@@ -1,7 +1,7 @@
 # Adafruit CCS811 [![Build Status](https://github.com/adafruit/Adafruit_CCS811/workflows/Arduino%20Library%20CI/badge.svg)](https://github.com/adafruit/Adafruit_CCS811/actions)[![Documentation](https://github.com/adafruit/ci-arduino/blob/master/assets/doxygen_badge.svg)](http://adafruit.github.io/Adafruit_CCS811/html/index.html)
 
 
-<img src="https://cdn-shop.adafruit.com/970x728/3566-00.jpg" height="300"/>
+<img src="https://cdn-shop.adafruit.com/970x728/3566-05.jpg" height="300"/>
 
 This is a library for the Adafruit CCS811 gas sensor breakout board:
   * https://www.adafruit.com/product/3566
