@@ -8,10 +8,11 @@
     @returns True if device is set up, false on any failure
 */
 /**************************************************************************/
-bool Adafruit_CCS811::begin(uint8_t addr) {
-  _i2caddr = addr;
-
-  _i2c_init();
+bool Adafruit_CCS811::begin(uint8_t addr, TwoWire *theWire) {
+  i2c_dev = new Adafruit_I2CDevice(addr, theWire);
+  if (!i2c_dev->begin()) {
+    return false;
+  }
 
   SWReset();
   delay(100);
@@ -266,35 +267,33 @@ uint8_t Adafruit_CCS811::read8(byte reg) {
   return ret;
 }
 
-void Adafruit_CCS811::_i2c_init() {
-  Wire.begin();
-#ifdef ESP8266
-  Wire.setClockStretchLimit(500);
-#endif
-}
-
 void Adafruit_CCS811::read(uint8_t reg, uint8_t *buf, uint8_t num) {
+  uint8_t buffer[1];
+  size_t chunkSize = i2c_dev->maxBufferSize();
   uint8_t pos = 0;
 
-  // on arduino we need to read in 32 byte chunks
-  while (pos < num) {
-
-    uint8_t read_now = min((uint8_t)32, (uint8_t)(num - pos));
-    Wire.beginTransmission((uint8_t)_i2caddr);
-    Wire.write((uint8_t)reg + pos);
-    Wire.endTransmission();
-    Wire.requestFrom((uint8_t)_i2caddr, read_now);
-
-    for (int i = 0; i < read_now; i++) {
-      buf[pos] = Wire.read();
-      pos++;
+  if (chunkSize > num) {
+    // can just read
+    buffer[0] = reg;
+    i2c_dev->write(buffer, 1);
+    i2c_dev->read(buf, num);
+  } else {
+    // must read in chunks
+    uint8_t read_buffer[chunkSize];
+    while (pos < num) {
+      buffer[0] = reg + pos;
+      i2c_dev->write(buffer, 1);
+      uint8_t read_now = min(uint8_t(chunkSize), (uint8_t)(num - pos));
+      i2c_dev->read(read_buffer, read_now);
+      for (uint8_t i = 0; i < read_now; i++) {
+        buf[pos] = read_buffer[i];
+        pos++;
+      }
     }
   }
 }
 
 void Adafruit_CCS811::write(uint8_t reg, uint8_t *buf, uint8_t num) {
-  Wire.beginTransmission((uint8_t)_i2caddr);
-  Wire.write((uint8_t)reg);
-  Wire.write((uint8_t *)buf, num);
-  Wire.endTransmission();
+  uint8_t prefix[1] = {reg};
+  i2c_dev->write(buf, num, true, prefix, 1);
 }
