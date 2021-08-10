@@ -5,14 +5,19 @@
     @brief  Setups the I2C interface and hardware and checks for communication.
     @param  addr Optional I2C address the sensor can be found on. Default is
    0x5A
+    @param theWire Optional pointer to I2C interface, &Wire is used by default
     @returns True if device is set up, false on any failure
 */
 /**************************************************************************/
 bool Adafruit_CCS811::begin(uint8_t addr, TwoWire *theWire) {
+
   i2c_dev = new Adafruit_I2CDevice(addr, theWire);
   if (!i2c_dev->begin()) {
     return false;
   }
+#ifdef ESP8266
+  Wire.setClockStretchLimit(500);
+#endif
 
   SWReset();
   delay(100);
