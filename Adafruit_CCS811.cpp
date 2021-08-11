@@ -16,7 +16,7 @@ bool Adafruit_CCS811::begin(uint8_t addr, TwoWire *theWire) {
     return false;
   }
 #ifdef ESP8266
-  Wire.setClockStretchLimit(500);
+  theWire->setClockStretchLimit(500);
 #endif
 
   SWReset();
