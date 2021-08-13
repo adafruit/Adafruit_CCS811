@@ -5,13 +5,19 @@
     @brief  Setups the I2C interface and hardware and checks for communication.
     @param  addr Optional I2C address the sensor can be found on. Default is
    0x5A
+    @param theWire Optional pointer to I2C interface, &Wire is used by default
     @returns True if device is set up, false on any failure
 */
 /**************************************************************************/
-bool Adafruit_CCS811::begin(uint8_t addr) {
-  _i2caddr = addr;
+bool Adafruit_CCS811::begin(uint8_t addr, TwoWire *theWire) {
 
-  _i2c_init();
+  i2c_dev = new Adafruit_I2CDevice(addr, theWire);
+  if (!i2c_dev->begin()) {
+    return false;
+  }
+#ifdef ESP8266
+  theWire->setClockStretchLimit(500);
+#endif
 
   SWReset();
   delay(100);
@@ -266,35 +272,12 @@ uint8_t Adafruit_CCS811::read8(byte reg) {
   return ret;
 }
 
-void Adafruit_CCS811::_i2c_init() {
-  Wire.begin();
-#ifdef ESP8266
-  Wire.setClockStretchLimit(500);
-#endif
-}
-
 void Adafruit_CCS811::read(uint8_t reg, uint8_t *buf, uint8_t num) {
-  uint8_t pos = 0;
-
-  // on arduino we need to read in 32 byte chunks
-  while (pos < num) {
-
-    uint8_t read_now = min((uint8_t)32, (uint8_t)(num - pos));
-    Wire.beginTransmission((uint8_t)_i2caddr);
-    Wire.write((uint8_t)reg + pos);
-    Wire.endTransmission();
-    Wire.requestFrom((uint8_t)_i2caddr, read_now);
-
-    for (int i = 0; i < read_now; i++) {
-      buf[pos] = Wire.read();
-      pos++;
-    }
-  }
+  uint8_t buffer[1] = {reg};
+  i2c_dev->write_then_read(buffer, 1, buf, num);
 }
 
 void Adafruit_CCS811::write(uint8_t reg, uint8_t *buf, uint8_t num) {
-  Wire.beginTransmission((uint8_t)_i2caddr);
-  Wire.write((uint8_t)reg);
-  Wire.write((uint8_t *)buf, num);
-  Wire.endTransmission();
+  uint8_t prefix[1] = {reg};
+  i2c_dev->write(buf, num, true, prefix, 1);
 }

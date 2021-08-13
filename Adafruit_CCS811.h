@@ -7,7 +7,7 @@
 #include "WProgram.h"
 #endif
 
-#include <Wire.h>
+#include <Adafruit_I2CDevice.h>
 
 /*=========================================================================
     I2C ADDRESS/BITS
@@ -69,7 +69,7 @@ public:
   Adafruit_CCS811(void){};
   ~Adafruit_CCS811(void){};
 
-  bool begin(uint8_t addr = CCS811_ADDRESS);
+  bool begin(uint8_t addr = CCS811_ADDRESS, TwoWire *theWire = &Wire);
 
   void setEnvironmentalData(float humidity, float temperature);
 
@@ -140,7 +140,7 @@ public:
   bool checkError();
 
 private:
-  uint8_t _i2caddr;
+  Adafruit_I2CDevice *i2c_dev = NULL; ///< Pointer to I2C bus interface
   float _tempOffset;
 
   uint16_t _TVOC;
@@ -155,7 +155,6 @@ private:
 
   void read(uint8_t reg, uint8_t *buf, uint8_t num);
   void write(uint8_t reg, uint8_t *buf, uint8_t num);
-  void _i2c_init();
 
   /*=========================================================================
           REGISTER BITFIELDS
