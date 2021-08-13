@@ -74,9 +74,9 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a22b8450e43504c516798559e2ece3605"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___c_c_s811.html#a22b8450e43504c516798559e2ece3605">begin</a> (uint8_t addr=CCS811_ADDRESS)</td></tr>
-<tr class="memdesc:a22b8450e43504c516798559e2ece3605"><td class="mdescLeft">&#160;</td><td class="mdescRight">Setups the I2C interface and hardware and checks for communication.  <a href="#a22b8450e43504c516798559e2ece3605">More...</a><br /></td></tr>
-<tr class="separator:a22b8450e43504c516798559e2ece3605"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6f7d61a9be0f6a51af82a409537ddfa7"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___c_c_s811.html#a6f7d61a9be0f6a51af82a409537ddfa7">begin</a> (uint8_t addr=CCS811_ADDRESS, TwoWire *theWire=&amp;Wire)</td></tr>
+<tr class="memdesc:a6f7d61a9be0f6a51af82a409537ddfa7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Setups the I2C interface and hardware and checks for communication.  <a href="#a6f7d61a9be0f6a51af82a409537ddfa7">More...</a><br /></td></tr>
+<tr class="separator:a6f7d61a9be0f6a51af82a409537ddfa7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a39e6cd8f7a267c04a743f6d2d2fc1978"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___c_c_s811.html#a39e6cd8f7a267c04a743f6d2d2fc1978">setEnvironmentalData</a> (float humidity, float temperature)</td></tr>
 <tr class="memdesc:a39e6cd8f7a267c04a743f6d2d2fc1978"><td class="mdescLeft">&#160;</td><td class="mdescRight">set the humidity and temperature compensation for the sensor.  <a href="#a39e6cd8f7a267c04a743f6d2d2fc1978">More...</a><br /></td></tr>
 <tr class="separator:a39e6cd8f7a267c04a743f6d2d2fc1978"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -135,8 +135,8 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Class that stores state and functions for interacting with CCS811 gas sensor chips. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="a22b8450e43504c516798559e2ece3605"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a22b8450e43504c516798559e2ece3605">&#9670;&nbsp;</a></span>begin()</h2>
+<a id="a6f7d61a9be0f6a51af82a409537ddfa7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6f7d61a9be0f6a51af82a409537ddfa7">&#9670;&nbsp;</a></span>begin()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -145,8 +145,18 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
           <td class="memname">bool Adafruit_CCS811::begin </td>
           <td>(</td>
           <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>addr</em> = <code>CCS811_ADDRESS</code></td><td>)</td>
+          <td class="paramname"><em>addr</em> = <code>CCS811_ADDRESS</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">TwoWire *&#160;</td>
+          <td class="paramname"><em>theWire</em> = <code>&amp;Wire</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -155,6 +165,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">addr</td><td>Optional I2C address the sensor can be found on. Default is 0x5A </td></tr>
+    <tr><td class="paramname">theWire</td><td>Optional pointer to I2C interface, &amp;Wire is used by default </td></tr>
   </table>
   </dd>
 </dl>
