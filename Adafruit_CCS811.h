@@ -67,7 +67,7 @@ class Adafruit_CCS811 {
 public:
   // constructors
   Adafruit_CCS811(void){};
-  ~Adafruit_CCS811(void){};
+  ~Adafruit_CCS811(void);
 
   bool begin(uint8_t addr = CCS811_ADDRESS, TwoWire *theWire = &Wire);
 

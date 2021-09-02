@@ -1,5 +1,10 @@
 #include "Adafruit_CCS811.h"
 
+Adafruit_CCS811::~Adafruit_CCS811(void) {
+  if (i2c_dev)
+    delete i2c_dev;
+}
+
 /**************************************************************************/
 /*!
     @brief  Setups the I2C interface and hardware and checks for communication.
@@ -10,7 +15,8 @@
 */
 /**************************************************************************/
 bool Adafruit_CCS811::begin(uint8_t addr, TwoWire *theWire) {
-
+  if (i2c_dev)
+    delete i2c_dev;
   i2c_dev = new Adafruit_I2CDevice(addr, theWire);
   if (!i2c_dev->begin()) {
     return false;
